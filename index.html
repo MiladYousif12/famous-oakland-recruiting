@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Famous Transports & Oakland Freight — Driver Recruiting & Payouts</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Driver Tracker">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --bg-main: #0a0f1d;
+            --bg-card: #111827;
+            --bg-card-subtle: rgba(17, 24, 39, 0.7);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.16);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --accent-blue: #38bdf8;
+            --accent-cyan: #06b6d4;
+            --accent-amber: #f59e0b;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-purple: #8b5cf6;
+            --accent-rose: #f43f5e;
+            --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* App Wrapper */
+        .app-wrapper {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (max-width: 640px) {
+            .app-wrapper {
+                padding: 12px;
+                gap: 16px;
+            }
+        }
+
+        /* Top Bar */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 10px 16px;
+            backdrop-filter: blur(12px);
+        }
+
+        .user-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        .avatar-admin {
+            background: linear-gradient(135deg, #0ea5e9, #2563eb);
+            color: white;
+            box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);
+        }
+
+        .avatar-joey {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 800;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .user-role-badge {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        .role-admin-badge {
+            color: #38bdf8;
+        }
+
+        .role-joey-badge {
+            color: #fbbf24;
+        }
+
+        .btn-logout {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 7px 14px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        /* Header Hero */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 24px 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .brand-block {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .company-logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            object-fit: cover;
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+            background: #0f172a;
+        }
+
+        .company-titles h1 {
+            font-size: 22px;
+            font-weight: 900;
+            color: white;
+            line-height: 1.2;
+            letter-spacing: -0.3px;
+        }
+
+        .company-titles .subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 3px;
+            font-weight: 500;
+        }
+
+        .company-titles .owner-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #fbbf24;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-top: 6px;
+        }
+
+        /* Metric Cards Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .metric-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        .metric-card.active-metric {
+            border-color: var(--accent-blue);
+            background: rgba(30, 41, 59, 0.9);
+            box-shadow: 0 4px 16px rgba(56, 189, 248, 0.15);
+        }
+
+        .metric-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: 900;
+            color: white;
+            line-height: 1.1;
+            margin-top: 4px;
+        }
+
+        .metric-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .color-pending { color: #f59e0b; }
+        .color-paid { color: #10b981; }
+        .color-total { color: #38bdf8; }
+        .color-gross { color: #c084fc; }
+
+        /* Action Toolbar */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border: none;
+            color: white;
+            font-size: 13px;
+            font-weight: 800;
+            padding: 10px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 9px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Filter Controls */
+        .filter-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 16px 12px 42px;
+            font-size: 14px;
+            color: white;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 14px rgba(56, 189, 248, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: var(--text-dim);
+            pointer-events: none;
+        }
+
+        .filter-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .select-filter {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 9px 14px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            outline: none;
+            cursor: pointer;
+            min-width: 140px;
+            flex: 1;
+        }
+
+        .select-filter:focus {
+            border-color: var(--accent-blue);
+        }
+
+        /* Subtabs Row */
+        .subtabs-row {
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            overflow-x: auto;
+        }
+
+        .subtab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .subtab-btn.active {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .subtab-badge {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            font-size: 11px;
+            padding: 2px 7px;
+            border-radius: 999px;
+            font-weight: 800;
+        }
+
+        .subtab-btn.active .subtab-badge {
+            background: var(--accent-blue);
+            color: #04101e;
+        }
+
+        /* Drivers List */
+        .drivers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .driver-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .driver-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .driver-card.is-paid {
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .driver-card.is-pending {
+            border-left: 4px solid var(--accent-amber);
+        }
+
+        .driver-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .driver-name-block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .driver-name {
+            font-size: 19px;
+            font-weight: 900;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .driver-hired-date {
+            font-size: 12px;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        /* Tag Badges */
+        .badge-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-cdl-a {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(30, 64, 175, 0.4));
+            border: 1px solid #3b82f6;
+            color: #93c5fd;
+        }
+
+        .badge-cdl-b {
+            background: linear-gradient(135deg, rgba(217, 119, 6, 0.25), rgba(180, 83, 9, 0.4));
+            border: 1px solid #f59e0b;
+            color: #fde68a;
+        }
+
+        .badge-oakland {
+            background: rgba(14, 165, 233, 0.15);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            color: #38bdf8;
+        }
+
+        .badge-famous {
+            background: rgba(225, 29, 72, 0.15);
+            border: 1px solid rgba(225, 29, 72, 0.35);
+            color: #fda4af;
+        }
+
+        .badge-panther {
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #fbbf24;
+        }
+
+        .badge-forward {
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            color: #a5b4fc;
+        }
+
+        .badge-status-paid {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.45));
+            border: 1.5px solid #10b981;
+            color: #6ee7b7;
+            font-weight: 900;
+        }
+
+        .badge-status-pending {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.35));
+            border: 1.5px solid #f59e0b;
+            color: #fde68a;
+            font-weight: 900;
+        }
+
+        /* Driver Details Grid */
+        .driver-info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 14px;
+            padding: 12px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        @media (max-width: 640px) {
+            .driver-info-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .info-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-size: 13px;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-value a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        .info-value a:hover {
+            text-decoration: underline;
+        }
+
+        .payout-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px 14px;
+        }
+
+        .payout-amount-display {
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .driver-notes {
+            font-size: 12px;
+            color: var(--text-muted);
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 10px 12px;
+            border-left: 3px solid var(--border-color);
+            white-space: pre-line;
+        }
+
+        /* Card Actions */
+        .card-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-toggle-paid {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: none;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-toggle-paid:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-toggle-pending {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: #fbbf24;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-toggle-pending:hover {
+            background: rgba(245, 158, 11, 0.25);
+        }
+
+        .admin-action-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-icon {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-icon:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .btn-icon.btn-danger:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 48px 20px;
+            background: var(--bg-card);
+            border: 1px dashed var(--border-color);
+            border-radius: 20px;
+            color: var(--text-dim);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .empty-icon {
+            font-size: 40px;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+
+        .modal-card {
+            background: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 500px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 14px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 24px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        @media (max-width: 500px) {
+            .form-row {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .form-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            background: #0b0f19;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 14px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+        }
+
+        .fee-preview-box {
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .fee-preview-label {
+            font-size: 12px;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        .fee-preview-val {
+            font-size: 18px;
+            font-weight: 900;
+            color: #38bdf8;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 8px;
+        }
+
+        /* Toast Message */
+        #toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #10b981;
+            color: white;
+            font-size: 13px;
+            font-weight: 800;
+            padding: 10px 20px;
+            border-radius: 999px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 2000;
+            pointer-events: none;
+            text-align: center;
+        }
+
+        /* Login Screen */
+        .auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top center, #1e293b 0%, #0a0f1d 75%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: rgba(17, 24, 39, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 28px;
+            padding: 36px 30px;
+            width: 100%;
+            max-width: 420px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .auth-card img {
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
+            margin: 0 auto;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            background: #0f172a;
+        }
+
+        .auth-title {
+            font-size: 22px;
+            font-weight: 900;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .auth-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .auth-presets {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .btn-preset {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s;
+        }
+
+        .btn-preset:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            padding: 24px 0 16px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-dim);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- AUTH OVERLAY -->
+    <div id="auth-overlay" class="auth-overlay">
+        <div class="auth-card">
+            <img src="logo.png" alt="Company Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'64\' height=\'64\' viewBox=\'0 0 24 24\' fill=\'%2338bdf8\'><path d=\'M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z\'/></svg>'">
+            <div>
+                <div class="auth-title">Famous Transports & Oakland Freight</div>
+                <div class="auth-sub">Driver Recruiting & Payout System</div>
+                <div style="font-size: 11px; color: #fbbf24; font-weight: 800; margin-top: 4px;">Owner: Joey Haji</div>
+            </div>
+
+            <form id="auth-form" onsubmit="handleLoginSubmit(event)" style="display: flex; flex-direction: column; gap: 12px; margin-top: 8px;">
+                <div style="text-align: left;">
+                    <label class="form-label">Username</label>
+                    <input type="text" id="login-username" class="form-input" placeholder="e.g. milad or joey" required autocomplete="username">
+                </div>
+                <div style="text-align: left;">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="login-password" class="form-input" placeholder="Enter password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 12px; margin-top: 4px;">
+                    Sign In
+                </button>
+            </form>
+
+            <div style="display: flex; align-items: center; gap: 8px; margin: 4px 0;">
+                <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.08);"></div>
+                <span style="font-size: 10px; font-weight: 800; color: var(--text-dim); text-transform: uppercase;">Quick Logins</span>
+                <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.08);"></div>
+            </div>
+
+            <div class="auth-presets">
+                <button type="button" class="btn-preset" onclick="fillQuickLogin('milad', '2113')">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span>👑</span>
+                        <span><b>Milad</b> (Recruiter Admin)</span>
+                    </span>
+                    <span style="font-size: 11px; color: #38bdf8; font-weight: 800;">Log In &rarr;</span>
+                </button>
+                <button type="button" class="btn-preset" onclick="fillQuickLogin('joey', 'joey')">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span>🏢</span>
+                        <span><b>Joey</b> (Company Owner)</span>
+                    </span>
+                    <span style="font-size: 11px; color: #fbbf24; font-weight: 800;">Log In &rarr;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div id="app-container" class="app-wrapper" style="display: none;">
+        
+        <!-- TOP BAR -->
+        <div class="top-bar">
+            <div class="user-pill">
+                <div id="user-avatar-circle" class="user-avatar avatar-admin">M</div>
+                <div class="user-details">
+                    <span id="current-user-display" class="user-name">Milad Yousif</span>
+                    <span id="current-user-role-label" class="user-role-badge role-admin-badge">Recruiter Admin</span>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <button class="btn-logout" onclick="handleLogout()">
+                    <span>🚪</span>
+                    <span>Sign Out</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- HERO HEADER WITH METRICS -->
+        <div class="hero-banner">
+            <div class="hero-header-content">
+                <div class="brand-block">
+                    <img src="logo.png" alt="Company Logo" class="company-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'64\' height=\'64\' viewBox=\'0 0 24 24\' fill=\'%2338bdf8\'><path d=\'M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z\'/></svg>'">
+                    <div class="company-titles">
+                        <h1>Famous Transports & Oakland Freight</h1>
+                        <div class="subtitle">Driver Recruiting & Payout System • Powered by Milad Yousif</div>
+                        <div class="owner-tag">
+                            <span>👑</span>
+                            <span>Fleet Owner: Joey Haji</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="toolbar" id="admin-add-toolbar">
+                    <button id="btn-add-driver" class="btn-primary" onclick="openDriverModal()">
+                        <span>➕</span>
+                        <span>Add Hired Driver</span>
+                    </button>
+                    <button class="btn-secondary" onclick="exportCSV()">
+                        <span>📥</span>
+                        <span>Export CSV</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- METRIC CARDS -->
+            <div class="metrics-grid">
+                <div class="metric-card" onclick="setPaymentFilter('all')">
+                    <div class="metric-header">
+                        <span>Drivers Hired</span>
+                        <span>🚛</span>
+                    </div>
+                    <div class="metric-value color-total" id="metric-total-count">0</div>
+                    <div class="metric-sub" id="metric-class-breakdown">0 Class A • 0 Class B</div>
+                </div>
+
+                <div class="metric-card" onclick="setPaymentFilter('Pending')">
+                    <div class="metric-header">
+                        <span>Pending Payout</span>
+                        <span>⏳</span>
+                    </div>
+                    <div class="metric-value color-pending" id="metric-pending-amount">$0</div>
+                    <div class="metric-sub"><span id="metric-pending-count">0</span> drivers awaiting payment</div>
+                </div>
+
+                <div class="metric-card" onclick="setPaymentFilter('Paid')">
+                    <div class="metric-header">
+                        <span>Paid to Milad</span>
+                        <span>💰</span>
+                    </div>
+                    <div class="metric-value color-paid" id="metric-paid-amount">$0</div>
+                    <div class="metric-sub"><span id="metric-paid-count">0</span> drivers paid</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span>Total Contract Value</span>
+                        <span>📈</span>
+                    </div>
+                    <div class="metric-value color-gross" id="metric-gross-amount">$0</div>
+                    <div class="metric-sub">Class A ($2K) • Class B ($1K)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILTER & CONTROLS SECTION -->
+        <div class="filter-section">
+            <!-- Payment Subtabs -->
+            <div class="subtabs-row">
+                <button class="subtab-btn active" id="tab-status-all" onclick="setPaymentFilter('all')">
+                    <span>📋 All Drivers</span>
+                    <span class="subtab-badge" id="badge-count-all">0</span>
+                </button>
+                <button class="subtab-btn" id="tab-status-pending" onclick="setPaymentFilter('Pending')">
+                    <span>⏳ Pending Payout</span>
+                    <span class="subtab-badge" id="badge-count-pending">0</span>
+                </button>
+                <button class="subtab-btn" id="tab-status-paid" onclick="setPaymentFilter('Paid')">
+                    <span>💰 Paid</span>
+                    <span class="subtab-badge" id="badge-count-paid">0</span>
+                </button>
+            </div>
+
+            <!-- Search and Dropdowns -->
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" class="search-input" placeholder="Search drivers by name, phone, email, notes..." oninput="renderDrivers()">
+            </div>
+
+            <div class="filter-row">
+                <select id="filter-company" class="select-filter" onchange="renderDrivers()">
+                    <option value="all">🏢 All Companies (Famous & Oakland)</option>
+                    <option value="Famous Transports">Famous Transports</option>
+                    <option value="Oakland Freight">Oakland Freight</option>
+                </select>
+
+                <select id="filter-carrier" class="select-filter" onchange="renderDrivers()">
+                    <option value="all">🌐 All Accounts (Panther & Forward Air)</option>
+                    <option value="Panther">🐆 Panther</option>
+                    <option value="Forward Air">✈️ Forward Air</option>
+                </select>
+
+                <select id="filter-cdl" class="select-filter" onchange="renderDrivers()">
+                    <option value="all">🪪 All CDL Types</option>
+                    <option value="Class A">Class A CDL ($2,000)</option>
+                    <option value="Class B">Class B CDL ($1,000)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- SECTION TITLE -->
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="font-size: 18px; font-weight: 900; color: white; display: flex; align-items: center; gap: 8px;">
+                <span>📋</span>
+                <span>Hired and Paid Drivers</span>
+                <span id="filtered-count-badge" style="font-size: 12px; background: rgba(255,255,255,0.08); padding: 2px 8px; border-radius: 999px; color: var(--text-muted);">0</span>
+            </div>
+            <div id="joey-permission-notice" style="display: none; font-size: 12px; color: #fbbf24; font-weight: 700;">
+                🔒 Joey Access: Payment Status Toggle Only
+            </div>
+        </div>
+
+        <!-- DRIVERS CONTAINER -->
+        <div id="drivers-list" class="drivers-container">
+            <!-- Dynamically populated -->
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            Famous Transports & Oakland Freight Driver Recruiting System • Owned & Operated by Joey Haji • Powered by <a href="https://miladyousif.com" target="_blank">Milad Yousif</a>
+        </footer>
+    </div>
+
+    <!-- DRIVER ADD/EDIT MODAL -->
+    <div id="driver-modal" class="modal-overlay" onclick="handleModalBackdropClick(event)">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title" id="modal-title">
+                    <span>➕</span>
+                    <span>Add Hired Driver</span>
+                </div>
+                <button class="modal-close" onclick="closeDriverModal()">&times;</button>
+            </div>
+
+            <form id="driver-form" onsubmit="handleDriverSubmit(event)" style="display: flex; flex-direction: column; gap: 14px;">
+                <input type="hidden" id="edit-driver-id">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">First Name *</label>
+                        <input type="text" id="driver-first-name" class="form-input" placeholder="e.g. John" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name *</label>
+                        <input type="text" id="driver-last-name" class="form-input" placeholder="e.g. Smith" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Mobile Phone *</label>
+                        <input type="tel" id="driver-phone" class="form-input" placeholder="e.g. (313) 555-0199" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" id="driver-email" class="form-input" placeholder="e.g. driver@gmail.com">
+                    </div>
+                </div>
+
+                <!-- CDL Classification & Fee Calculation -->
+                <div class="form-group">
+                    <label class="form-label">CDL Classification *</label>
+                    <select id="driver-cdl" class="form-select" onchange="updateFeePreview()" required>
+                        <option value="Class A">Class A CDL ($2,000 Payout)</option>
+                        <option value="Class B">Class B CDL ($1,000 Payout)</option>
+                    </select>
+                </div>
+
+                <div class="fee-preview-box">
+                    <span class="fee-preview-label">Milad's Placement Fee:</span>
+                    <span class="fee-preview-val" id="form-fee-display">$2,000</span>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Company Assignment *</label>
+                        <select id="driver-company" class="form-select" required>
+                            <option value="Oakland Freight">Oakland Freight</option>
+                            <option value="Famous Transports">Famous Transports</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Carrier / Account *</label>
+                        <select id="driver-carrier" class="form-select" required>
+                            <option value="Panther">🐆 Panther</option>
+                            <option value="Forward Air">✈️ Forward Air</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Hire Date</label>
+                        <input type="date" id="driver-hired-date" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Payment Status</label>
+                        <select id="driver-payment-status" class="form-select">
+                            <option value="Pending">⏳ Pending Payout</option>
+                            <option value="Paid">💰 Paid to Milad</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Notes & Driving Experience</label>
+                    <textarea id="driver-notes" class="form-textarea" rows="3" placeholder="Clean MVR, 5 years OTR, Tanker endorsement, available immediately..."></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeDriverModal()">Cancel</button>
+                    <button type="submit" class="btn-primary" id="btn-save-driver">Save Driver</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast">Message</div>
+
+    <script>
+        /* ==========================================================================
+           Configuration & Supabase Init
+           ========================================================================== */
+        const SB_URL = 'https://rziobgjwhhhpwjraunoj.supabase.co';
+        const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ6aW9iZ2p3aGhocHdqcmF1bm9qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMTgyOTYsImV4cCI6MjA5MTY5NDI5Nn0.QJhH7IX0J_yufZVqgmvi6SSYAfnL83TGOjjYcUQud2Y';
+        
+        let sb = null;
+        try {
+            sb = supabase.createClient(SB_URL, SB_KEY);
+        } catch (e) {
+            console.warn("Supabase client init failed, running in local-first mode", e);
+        }
+
+        const LOCAL_STORAGE_KEY = 'famous_oakland_drivers_v1';
+        const AUTH_STORAGE_KEY = 'famous_oakland_auth_user_v1';
+
+        /* App State */
+        let DRIVERS_DATA = [];
+        let currentUser = null; // { username: 'milad', role: 'admin' } OR { username: 'joey', role: 'joey' }
+        let currentPaymentFilter = 'all'; // 'all', 'Pending', 'Paid'
+
+        /* Seed initial data if fresh installation */
+        const INITIAL_DRIVERS_SEED = [
+            {
+                id: 'drv_' + Date.now() + '_1',
+                first_name: 'Marcus',
+                last_name: 'Vance',
+                phone: '(313) 456-7890',
+                email: 'marcus.vance@gmail.com',
+                cdl_type: 'Class A',
+                company: 'Oakland Freight',
+                carrier: 'Panther',
+                hired_date: '2026-10-12',
+                commission_amount: 2000,
+                commission_status: 'Paid',
+                paid_date: '2026-10-14',
+                notes: 'Clean MVR, 6 years OTR experience, verified medical card. Excellent communication.'
+            },
+            {
+                id: 'drv_' + Date.now() + '_2',
+                first_name: 'Darius',
+                last_name: 'Hampton',
+                phone: '(248) 555-0144',
+                email: 'darius.h@outlook.com',
+                cdl_type: 'Class B',
+                company: 'Famous Transports',
+                carrier: 'Forward Air',
+                hired_date: '2026-10-14',
+                commission_amount: 1000,
+                commission_status: 'Pending',
+                paid_date: null,
+                notes: 'Local box truck route experience. Punctual, passed drug screening with flying colors.'
+            },
+            {
+                id: 'drv_' + Date.now() + '_3',
+                first_name: 'Jamal',
+                last_name: 'Sterling',
+                phone: '(586) 889-2311',
+                email: 'sterling.jamal@gmail.com',
+                cdl_type: 'Class A',
+                company: 'Famous Transports',
+                carrier: 'Panther',
+                hired_date: '2026-10-15',
+                commission_amount: 2000,
+                commission_status: 'Pending',
+                paid_date: null,
+                notes: 'Doubles & Tanker endorsements. Ready to run team freight.'
+            },
+            {
+                id: 'drv_' + Date.now() + '_4',
+                first_name: 'Anthony',
+                last_name: 'Miller',
+                phone: '(734) 712-9904',
+                email: 'anthony.miller@icloud.com',
+                cdl_type: 'Class B',
+                company: 'Oakland Freight',
+                carrier: 'Forward Air',
+                hired_date: '2026-10-10',
+                commission_amount: 1000,
+                commission_status: 'Paid',
+                paid_date: '2026-10-12',
+                notes: 'Expedited freight specialist with air cargo security clearance.'
+            }
+        ];
+
+        /* ==========================================================================
+           Authentication & Authorization
+           ========================================================================== */
+        function checkAuth() {
+            const saved = localStorage.getItem(AUTH_STORAGE_KEY);
+            if (saved) {
+                try {
+                    currentUser = JSON.parse(saved);
+                    applyRoleUI();
+                    document.getElementById('auth-overlay').style.display = 'none';
+                    document.getElementById('app-container').style.display = 'flex';
+                    loadData();
+                    return;
+                } catch(e) {
+                    localStorage.removeItem(AUTH_STORAGE_KEY);
+                }
+            }
+            document.getElementById('auth-overlay').style.display = 'flex';
+            document.getElementById('app-container').style.display = 'none';
+        }
+
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            const u = document.getElementById('login-username').value.trim().toLowerCase();
+            const p = document.getElementById('login-password').value.trim();
+
+            if (u === 'milad' && p === '2113') {
+                currentUser = {
+                    username: 'milad',
+                    displayName: 'Milad Yousif',
+                    role: 'admin'
+                };
+            } else if (u === 'joey' && p === 'joey') {
+                currentUser = {
+                    username: 'joey',
+                    displayName: 'Joey Haji',
+                    role: 'joey'
+                };
+            } else {
+                alert('🚨 Invalid Credentials!\n\nPlease check your username and password.');
+                return;
+            }
+
+            localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(currentUser));
+            document.getElementById('auth-overlay').style.display = 'none';
+            document.getElementById('app-container').style.display = 'flex';
+            applyRoleUI();
+            showToast(`Welcome back, ${currentUser.displayName}! 🚛`);
+            loadData();
+        }
+
+        function fillQuickLogin(u, p) {
+            document.getElementById('login-username').value = u;
+            document.getElementById('login-password').value = p;
+            document.getElementById('auth-form').dispatchEvent(new Event('submit'));
+        }
+
+        function handleLogout() {
+            localStorage.removeItem(AUTH_STORAGE_KEY);
+            currentUser = null;
+            document.getElementById('auth-overlay').style.display = 'flex';
+            document.getElementById('app-container').style.display = 'none';
+            showToast('Signed out successfully.');
+        }
+
+        function applyRoleUI() {
+            if (!currentUser) return;
+            const nameEl = document.getElementById('current-user-display');
+            const roleEl = document.getElementById('current-user-role-label');
+            const circleEl = document.getElementById('user-avatar-circle');
+            const addToolbar = document.getElementById('admin-add-toolbar');
+            const joeyNotice = document.getElementById('joey-permission-notice');
+
+            nameEl.textContent = currentUser.displayName;
+
+            if (currentUser.role === 'admin') {
+                roleEl.textContent = 'Recruiter Admin';
+                roleEl.className = 'user-role-badge role-admin-badge';
+                circleEl.textContent = 'M';
+                circleEl.className = 'user-avatar avatar-admin';
+                if (addToolbar) addToolbar.style.display = 'flex';
+                if (joeyNotice) joeyNotice.style.display = 'none';
+            } else {
+                roleEl.textContent = 'Company Owner';
+                roleEl.className = 'user-role-badge role-joey-badge';
+                circleEl.textContent = 'J';
+                circleEl.className = 'user-avatar avatar-joey';
+                // Joey cannot add drivers
+                if (addToolbar) addToolbar.style.display = 'none';
+                if (joeyNotice) joeyNotice.style.display = 'block';
+            }
+        }
+
+        /* ==========================================================================
+           Data Loading & Cloud Sync
+           ========================================================================== */
+        async function loadData() {
+            // 1. Load from LocalStorage first for instant view
+            const local = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if (local) {
+                try {
+                    DRIVERS_DATA = JSON.parse(local);
+                } catch(e) {
+                    DRIVERS_DATA = [...INITIAL_DRIVERS_SEED];
+                }
+            } else {
+                DRIVERS_DATA = [...INITIAL_DRIVERS_SEED];
+                saveLocal();
+            }
+
+            renderDashboardMetrics();
+            renderDrivers();
+
+            // 2. Fetch from Supabase Cloud
+            if (sb) {
+                try {
+                    const { data, error } = await sb.from('famous_oakland_drivers').select('*').order('created_at', { ascending: false });
+                    if (!error && data && data.length > 0) {
+                        DRIVERS_DATA = data;
+                        saveLocal();
+                        renderDashboardMetrics();
+                        renderDrivers();
+                    } else if (!error && data && data.length === 0 && DRIVERS_DATA.length > 0) {
+                        // First-time sync: push local seed to cloud
+                        for (const d of DRIVERS_DATA) {
+                            await sb.from('famous_oakland_drivers').upsert(d);
+                        }
+                    }
+                } catch (err) {
+                    console.log("Supabase sync note: Operating in local storage mode", err);
+                }
+            }
+        }
+
+        function saveLocal() {
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(DRIVERS_DATA));
+        }
+
+        async function syncDriverToCloud(driver) {
+            saveLocal();
+            if (sb) {
+                try {
+                    await sb.from('famous_oakland_drivers').upsert(driver);
+                } catch (e) {
+                    console.warn("Cloud save skipped (offline/local mode)");
+                }
+            }
+        }
+
+        async function deleteDriverFromCloud(id) {
+            saveLocal();
+            if (sb) {
+                try {
+                    await sb.from('famous_oakland_drivers').delete().eq('id', id);
+                } catch (e) {
+                    console.warn("Cloud delete skipped");
+                }
+            }
+        }
+
+        /* ==========================================================================
+           Rendering & UI Calculation
+           ========================================================================== */
+        function renderDashboardMetrics() {
+            let totalCount = DRIVERS_DATA.length;
+            let classACount = DRIVERS_DATA.filter(d => d.cdl_type === 'Class A').length;
+            let classBCount = DRIVERS_DATA.filter(d => d.cdl_type === 'Class B').length;
+
+            let pendingDrivers = DRIVERS_DATA.filter(d => d.commission_status === 'Pending');
+            let paidDrivers = DRIVERS_DATA.filter(d => d.commission_status === 'Paid');
+
+            let pendingAmount = pendingDrivers.reduce((sum, d) => sum + (parseFloat(d.commission_amount) || 0), 0);
+            let paidAmount = paidDrivers.reduce((sum, d) => sum + (parseFloat(d.commission_amount) || 0), 0);
+            let grossAmount = pendingAmount + paidAmount;
+
+            document.getElementById('metric-total-count').textContent = totalCount;
+            document.getElementById('metric-class-breakdown').textContent = `${classACount} Class A • ${classBCount} Class B`;
+
+            document.getElementById('metric-pending-amount').textContent = `$${pendingAmount.toLocaleString()}`;
+            document.getElementById('metric-pending-count').textContent = pendingDrivers.length;
+
+            document.getElementById('metric-paid-amount').textContent = `$${paidAmount.toLocaleString()}`;
+            document.getElementById('metric-paid-count').textContent = paidDrivers.length;
+
+            document.getElementById('metric-gross-amount').textContent = `$${grossAmount.toLocaleString()}`;
+
+            // Subtab counts
+            document.getElementById('badge-count-all').textContent = totalCount;
+            document.getElementById('badge-count-pending').textContent = pendingDrivers.length;
+            document.getElementById('badge-count-paid').textContent = paidDrivers.length;
+        }
+
+        function setPaymentFilter(status) {
+            currentPaymentFilter = status;
+            document.getElementById('tab-status-all').classList.toggle('active', status === 'all');
+            document.getElementById('tab-status-pending').classList.toggle('active', status === 'Pending');
+            document.getElementById('tab-status-paid').classList.toggle('active', status === 'Paid');
+            renderDrivers();
+        }
+
+        function renderDrivers() {
+            const container = document.getElementById('drivers-list');
+            const searchVal = (document.getElementById('search-input')?.value || '').toLowerCase().trim();
+            const companyFilter = document.getElementById('filter-company')?.value || 'all';
+            const carrierFilter = document.getElementById('filter-carrier')?.value || 'all';
+            const cdlFilter = document.getElementById('filter-cdl')?.value || 'all';
+
+            let filtered = DRIVERS_DATA.filter(d => {
+                // Payment status filter
+                if (currentPaymentFilter !== 'all' && d.commission_status !== currentPaymentFilter) return false;
+                // Company filter
+                if (companyFilter !== 'all' && d.company !== companyFilter) return false;
+                // Carrier filter
+                if (carrierFilter !== 'all' && d.carrier !== carrierFilter) return false;
+                // CDL filter
+                if (cdlFilter !== 'all' && d.cdl_type !== cdlFilter) return false;
+                // Search query
+                if (searchVal) {
+                    const haystack = `${d.first_name} ${d.last_name} ${d.phone} ${d.email} ${d.company} ${d.carrier} ${d.notes}`.toLowerCase();
+                    if (!haystack.includes(searchVal)) return false;
+                }
+                return true;
+            });
+
+            document.getElementById('filtered-count-badge').textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🚛</div>
+                        <div style="font-size: 16px; font-weight: 800; color: white;">No drivers found</div>
+                        <div style="font-size: 13px;">No driver records match the current filters.</div>
+                        ${currentUser?.role === 'admin' ? `
+                            <button class="btn-primary" style="margin-top: 8px;" onclick="openDriverModal()">➕ Add New Driver</button>
+                        ` : ''}
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(d => {
+                const isPaid = d.commission_status === 'Paid';
+                const isClassA = d.cdl_type === 'Class A';
+                const feeFormatted = `$${(parseFloat(d.commission_amount) || (isClassA ? 2000 : 1000)).toLocaleString()}`;
+
+                const cdlBadgeClass = isClassA ? 'badge-cdl-a' : 'badge-cdl-b';
+                const cdlLabel = isClassA ? '🚛 Class A CDL' : '🚚 Class B CDL';
+
+                const companyBadgeClass = d.company === 'Famous Transports' ? 'badge-famous' : 'badge-oakland';
+                const carrierBadgeClass = d.carrier === 'Panther' ? 'badge-panther' : 'badge-forward';
+
+                const statusBadge = isPaid
+                    ? `<div class="badge badge-status-paid">💰 PAID TO MILAD</div>`
+                    : `<div class="badge badge-status-pending">⏳ PENDING PAYOUT</div>`;
+
+                const formattedHiredDate = formatDate(d.hired_date);
+                const formattedPaidDate = d.paid_date ? formatDate(d.paid_date) : null;
+
+                // Action controls based on role
+                // Joey Haji can toggle payment status, but CANNOT delete or edit
+                const toggleBtn = isPaid
+                    ? `<button class="btn-toggle-pending" onclick="togglePaymentStatus('${d.id}')">↩️ Mark as Pending</button>`
+                    : `<button class="btn-toggle-paid" onclick="togglePaymentStatus('${d.id}')">💰 Mark as Paid</button>`;
+
+                const adminButtons = currentUser?.role === 'admin' ? `
+                    <div class="admin-action-group">
+                        <button class="btn-icon" onclick="openDriverModal('${d.id}')">✏️ Edit</button>
+                        <button class="btn-icon btn-danger" onclick="deleteDriver('${d.id}')">🗑️ Delete</button>
+                    </div>
+                ` : '';
+
+                return `
+                    <div class="driver-card ${isPaid ? 'is-paid' : 'is-pending'}">
+                        <div class="driver-header">
+                            <div class="driver-name-block">
+                                <div class="driver-name">
+                                    <span>${escapeHtml(d.first_name)} ${escapeHtml(d.last_name)}</span>
+                                    ${statusBadge}
+                                </div>
+                                <div class="driver-hired-date">
+                                    🗓️ Hired on <b>${formattedHiredDate}</b> ${formattedPaidDate ? `• Paid on <b>${formattedPaidDate}</b>` : ''}
+                                </div>
+                            </div>
+
+                            <div class="badge-row">
+                                <div class="badge ${cdlBadgeClass}">${cdlLabel}</div>
+                                <div class="badge ${companyBadgeClass}">🏢 ${escapeHtml(d.company)}</div>
+                                <div class="badge ${carrierBadgeClass}">${d.carrier === 'Panther' ? '🐆' : '✈️'} ${escapeHtml(d.carrier)}</div>
+                            </div>
+                        </div>
+
+                        <div class="driver-info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Mobile Phone</span>
+                                <span class="info-value">
+                                    <a href="tel:${d.phone}">📞 ${escapeHtml(d.phone || 'N/A')}</a>
+                                </span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Email Address</span>
+                                <span class="info-value">
+                                    ${d.email ? `<a href="mailto:${d.email}">✉️ ${escapeHtml(d.email)}</a>` : '<span style="color:var(--text-dim);">No Email</span>'}
+                                </span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Milad's Placement Fee</span>
+                                <span class="info-value" style="color: ${isPaid ? '#10b981' : '#f59e0b'}; font-weight:900; font-size:16px;">
+                                    ${feeFormatted}
+                                </span>
+                            </div>
+                        </div>
+
+                        ${d.notes ? `
+                            <div class="driver-notes">
+                                <b>Driver Notes:</b> ${escapeHtml(d.notes)}
+                            </div>
+                        ` : ''}
+
+                        <div class="card-actions">
+                            <div>
+                                ${toggleBtn}
+                            </div>
+                            ${adminButtons}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        /* ==========================================================================
+           Payment Toggle Logic (Allowed for both Joey and Milad)
+           ========================================================================== */
+        async function togglePaymentStatus(id) {
+            const idx = DRIVERS_DATA.findIndex(d => String(d.id) === String(id));
+            if (idx === -1) return;
+
+            const driver = DRIVERS_DATA[idx];
+            const isCurrentlyPaid = driver.commission_status === 'Paid';
+            const driverName = `${driver.first_name} ${driver.last_name}`;
+            const fee = `$${(driver.commission_amount || (driver.cdl_type === 'Class A' ? 2000 : 1000)).toLocaleString()}`;
+
+            if (!isCurrentlyPaid) {
+                // Confirm marking as Paid
+                if (!confirm(`Mark ${driverName} as PAID?\n\nThis will record that Joey paid Milad ${fee} for this driver placement.`)) {
+                    return;
+                }
+                driver.commission_status = 'Paid';
+                driver.paid_date = new Date().toISOString().split('T')[0];
+                showToast(`✅ ${driverName} marked as PAID (${fee})!`);
+            } else {
+                // Confirm reverting to Pending
+                if (!confirm(`Revert ${driverName} back to PENDING payout?\n\nThis will restore the ${fee} balance owed to Milad.`)) {
+                    return;
+                }
+                driver.commission_status = 'Pending';
+                driver.paid_date = null;
+                showToast(`⏳ ${driverName} reverted to PENDING.`);
+            }
+
+            driver.updated_at = new Date().toISOString();
+            await syncDriverToCloud(driver);
+            renderDashboardMetrics();
+            renderDrivers();
+        }
+
+        /* ==========================================================================
+           Driver Add / Edit Modal Logic (Admin Only)
+           ========================================================================== */
+        function openDriverModal(id = null) {
+            if (currentUser?.role !== 'admin') {
+                alert('⚠️ Access Restricted: Only Milad (Admin) can add or edit driver records.');
+                return;
+            }
+
+            const modal = document.getElementById('driver-modal');
+            const titleEl = document.getElementById('modal-title');
+            const form = document.getElementById('driver-form');
+            form.reset();
+
+            if (id) {
+                const d = DRIVERS_DATA.find(x => String(x.id) === String(id));
+                if (!d) return;
+                titleEl.innerHTML = `<span>✏️</span><span>Edit Driver — ${escapeHtml(d.first_name)} ${escapeHtml(d.last_name)}</span>`;
+                document.getElementById('edit-driver-id').value = d.id;
+                document.getElementById('driver-first-name').value = d.first_name || '';
+                document.getElementById('driver-last-name').value = d.last_name || '';
+                document.getElementById('driver-phone').value = d.phone || '';
+                document.getElementById('driver-email').value = d.email || '';
+                document.getElementById('driver-cdl').value = d.cdl_type || 'Class A';
+                document.getElementById('driver-company').value = d.company || 'Oakland Freight';
+                document.getElementById('driver-carrier').value = d.carrier || 'Panther';
+                document.getElementById('driver-hired-date').value = d.hired_date || new Date().toISOString().split('T')[0];
+                document.getElementById('driver-payment-status').value = d.commission_status || 'Pending';
+                document.getElementById('driver-notes').value = d.notes || '';
+            } else {
+                titleEl.innerHTML = `<span>➕</span><span>Add Hired Driver</span>`;
+                document.getElementById('edit-driver-id').value = '';
+                document.getElementById('driver-hired-date').value = new Date().toISOString().split('T')[0];
+                document.getElementById('driver-cdl').value = 'Class A';
+                document.getElementById('driver-company').value = 'Oakland Freight';
+                document.getElementById('driver-carrier').value = 'Panther';
+                document.getElementById('driver-payment-status').value = 'Pending';
+            }
+
+            updateFeePreview();
+            modal.style.display = 'flex';
+        }
+
+        function closeDriverModal() {
+            document.getElementById('driver-modal').style.display = 'none';
+        }
+
+        function handleModalBackdropClick(e) {
+            if (e.target.id === 'driver-modal') closeDriverModal();
+        }
+
+        function updateFeePreview() {
+            const cdl = document.getElementById('driver-cdl').value;
+            const fee = cdl === 'Class A' ? 2000 : 1000;
+            document.getElementById('form-fee-display').textContent = `$${fee.toLocaleString()}`;
+        }
+
+        async function handleDriverSubmit(e) {
+            e.preventDefault();
+            if (currentUser?.role !== 'admin') {
+                alert('⚠️ Unauthorized.');
+                return;
+            }
+
+            const editId = document.getElementById('edit-driver-id').value;
+            const firstName = document.getElementById('driver-first-name').value.trim();
+            const lastName = document.getElementById('driver-last-name').value.trim();
+            const phone = document.getElementById('driver-phone').value.trim();
+            const email = document.getElementById('driver-email').value.trim();
+            const cdlType = document.getElementById('driver-cdl').value;
+            const company = document.getElementById('driver-company').value;
+            const carrier = document.getElementById('driver-carrier').value;
+            const hiredDate = document.getElementById('driver-hired-date').value || new Date().toISOString().split('T')[0];
+            const paymentStatus = document.getElementById('driver-payment-status').value;
+            const notes = document.getElementById('driver-notes').value.trim();
+
+            const commissionAmount = cdlType === 'Class A' ? 2000 : 1000;
+
+            if (editId) {
+                // Update existing
+                const idx = DRIVERS_DATA.findIndex(d => String(d.id) === String(editId));
+                if (idx > -1) {
+                    const prev = DRIVERS_DATA[idx];
+                    DRIVERS_DATA[idx] = {
+                        ...prev,
+                        first_name: firstName,
+                        last_name: lastName,
+                        phone: phone,
+                        email: email,
+                        cdl_type: cdlType,
+                        company: company,
+                        carrier: carrier,
+                        hired_date: hiredDate,
+                        commission_amount: commissionAmount,
+                        commission_status: paymentStatus,
+                        paid_date: paymentStatus === 'Paid' ? (prev.paid_date || new Date().toISOString().split('T')[0]) : null,
+                        notes: notes,
+                        updated_at: new Date().toISOString()
+                    };
+                    await syncDriverToCloud(DRIVERS_DATA[idx]);
+                    showToast(`Updated driver: ${firstName} ${lastName}`);
+                }
+            } else {
+                // Create new
+                const newDriver = {
+                    id: 'drv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+                    first_name: firstName,
+                    last_name: lastName,
+                    phone: phone,
+                    email: email,
+                    cdl_type: cdlType,
+                    company: company,
+                    carrier: carrier,
+                    hired_date: hiredDate,
+                    commission_amount: commissionAmount,
+                    commission_status: paymentStatus,
+                    paid_date: paymentStatus === 'Paid' ? new Date().toISOString().split('T')[0] : null,
+                    notes: notes,
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString(),
+                    created_by: currentUser.username
+                };
+                DRIVERS_DATA.unshift(newDriver);
+                await syncDriverToCloud(newDriver);
+                showToast(`🎉 Driver added: ${firstName} ${lastName}!`);
+            }
+
+            closeDriverModal();
+            renderDashboardMetrics();
+            renderDrivers();
+        }
+
+        async function deleteDriver(id) {
+            if (currentUser?.role !== 'admin') {
+                alert('⚠️ Permission Denied: Joey cannot delete driver records. Only Milad can remove drivers.');
+                return;
+            }
+
+            const d = DRIVERS_DATA.find(x => String(x.id) === String(id));
+            if (!d) return;
+
+            if (!confirm(`Are you sure you want to delete ${d.first_name} ${d.last_name}?\n\nThis action cannot be undone.`)) {
+                return;
+            }
+
+            DRIVERS_DATA = DRIVERS_DATA.filter(x => String(x.id) !== String(id));
+            await deleteDriverFromCloud(id);
+            showToast('Driver deleted.');
+            renderDashboardMetrics();
+            renderDrivers();
+        }
+
+        /* ==========================================================================
+           Utilities & Export
+           ========================================================================== */
+        function formatDate(dateStr) {
+            if (!dateStr) return 'N/A';
+            const parts = String(dateStr).split('-');
+            if (parts.length === 3) {
+                return `${parts[1]}/${parts[2]}/${parts[0]}`;
+            }
+            return dateStr;
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function showToast(msg, isError = false) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.style.background = isError ? '#ef4444' : '#10b981';
+            t.style.display = 'block';
+            setTimeout(() => { t.style.display = 'none'; }, 3500);
+        }
+
+        function exportCSV() {
+            if (DRIVERS_DATA.length === 0) {
+                alert('No drivers to export.');
+                return;
+            }
+
+            const headers = ['First Name', 'Last Name', 'Phone', 'Email', 'CDL Type', 'Company', 'Carrier', 'Hire Date', 'Payout Amount', 'Payment Status', 'Paid Date', 'Notes'];
+            const rows = DRIVERS_DATA.map(d => [
+                `"${d.first_name || ''}"`,
+                `"${d.last_name || ''}"`,
+                `"${d.phone || ''}"`,
+                `"${d.email || ''}"`,
+                `"${d.cdl_type || ''}"`,
+                `"${d.company || ''}"`,
+                `"${d.carrier || ''}"`,
+                `"${d.hired_date || ''}"`,
+                d.commission_amount || (d.cdl_type === 'Class A' ? 2000 : 1000),
+                `"${d.commission_status || ''}"`,
+                `"${d.paid_date || ''}"`,
+                `"${(d.notes || '').replace(/"/g, '""')}"`
+            ]);
+
+            const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', `Famous_Oakland_Drivers_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast('📊 Exported CSV report!');
+        }
+
+        // Initialize application on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+        });
+    </script>
+</body>
+</html>

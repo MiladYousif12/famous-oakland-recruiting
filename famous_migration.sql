@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS famous_oakland_drivers (
     carrier TEXT NOT NULL DEFAULT 'Panther', -- 'Panther' or 'Forward Air'
     hired_date DATE DEFAULT CURRENT_DATE,
     commission_amount NUMERIC NOT NULL DEFAULT 2000,
-    commission_status TEXT NOT NULL DEFAULT 'Pending', -- 'Pending' or 'Paid'
+    commission_status TEXT NOT NULL DEFAULT 'Pending', -- 'Pending', 'Paid', 'Replacement Due', 'Replacement Fulfilled'
     paid_date DATE,
     notes TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW(),

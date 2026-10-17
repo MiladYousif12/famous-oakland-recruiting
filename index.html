@@ -758,6 +758,278 @@
             border-color: rgba(239, 68, 68, 0.4);
         }
 
+        /* 30-Day Guarantee & Replacement System Styles */
+        .driver-card.is-replacement-due {
+            border-left: 4px solid var(--accent-rose);
+            background: linear-gradient(180deg, rgba(244, 63, 94, 0.06) 0%, var(--bg-card) 100%);
+        }
+
+        .badge-status-replacement {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(185, 28, 28, 0.45));
+            border: 1.5px solid #ef4444;
+            color: #fca5a5;
+            font-weight: 900;
+        }
+
+        .badge-status-fulfilled {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.25));
+            border: 1.5px solid #10b981;
+            color: #a7f3d0;
+            font-weight: 800;
+        }
+
+        .guarantee-liability-banner {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(185, 28, 28, 0.25) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            border-radius: 16px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 4px;
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.15);
+        }
+
+        @media (max-width: 640px) {
+            .guarantee-liability-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        .liability-main {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .liability-title {
+            font-size: 14px;
+            font-weight: 900;
+            color: #fca5a5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .liability-desc {
+            font-size: 12px;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+
+        .liability-badge {
+            background: rgba(239, 68, 68, 0.3);
+            border: 1px solid #ef4444;
+            color: white;
+            font-size: 14px;
+            font-weight: 900;
+            padding: 6px 14px;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+
+        .guarantee-widget {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .guarantee-widget.widget-active {
+            border-color: rgba(56, 189, 248, 0.3);
+            background: rgba(56, 189, 248, 0.04);
+        }
+
+        .guarantee-widget.widget-passed {
+            border-color: rgba(16, 185, 129, 0.25);
+            background: rgba(16, 185, 129, 0.03);
+        }
+
+        .guarantee-widget.widget-replacement-due {
+            border-color: rgba(239, 68, 68, 0.45);
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        .guarantee-widget.widget-fulfilled {
+            border-color: rgba(16, 185, 129, 0.3);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .guarantee-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .guarantee-title {
+            font-size: 12px;
+            font-weight: 800;
+            color: #93c5fd;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .guarantee-badge-day {
+            font-size: 10px;
+            font-weight: 800;
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #38bdf8;
+            padding: 2px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .guarantee-progress-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .guarantee-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #38bdf8, #10b981);
+            border-radius: 999px;
+            transition: width 0.3s ease;
+        }
+
+        .guarantee-caption {
+            font-size: 11px;
+            color: var(--text-dim);
+            line-height: 1.4;
+        }
+
+        .btn-guarantee-fail {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .btn-guarantee-fail:hover {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: #ef4444;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .btn-guarantee-fail-subtle {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-dim);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-guarantee-fail-subtle:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .guarantee-due-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .due-icon {
+            font-size: 22px;
+            line-height: 1;
+        }
+
+        .due-title {
+            font-size: 13px;
+            font-weight: 900;
+            color: #f87171;
+        }
+
+        .due-desc {
+            font-size: 12px;
+            color: #cbd5e1;
+            margin-top: 2px;
+            line-height: 1.4;
+        }
+
+        .guarantee-due-actions {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .btn-guarantee-fulfill {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: none;
+            color: white;
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-guarantee-fulfill:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-guarantee-revert {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-guarantee-revert:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: white;
+        }
+
+        .color-negative {
+            color: #f87171 !important;
+        }
+
         /* Empty State */
         .empty-state {
             text-align: center;
@@ -1176,6 +1448,10 @@
                     <span>💰 Paid</span>
                     <span class="subtab-badge" id="badge-count-paid">0</span>
                 </button>
+                <button class="subtab-btn" id="tab-status-replacement" onclick="setPaymentFilter('Replacement Due')">
+                    <span>🔄 Replacements</span>
+                    <span class="subtab-badge" id="badge-count-replacement">0</span>
+                </button>
             </div>
 
             <!-- Search and Dropdowns -->
@@ -1204,6 +1480,9 @@
                 </select>
             </div>
         </div>
+
+        <!-- GUARANTEE REPLACEMENT BANNER (if credit active) -->
+        <div id="guarantee-liability-banner" style="display: none;"></div>
 
         <!-- SECTION TITLE -->
         <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -1307,6 +1586,8 @@
                         <select id="driver-payment-status" class="form-select">
                             <option value="Pending">⏳ Pending Payout</option>
                             <option value="Paid">💰 Paid to Milad</option>
+                            <option value="Replacement Due">⚠️ Replacement Due (&lt; 30 Days)</option>
+                            <option value="Replacement Fulfilled">✅ Replacement Fulfilled</option>
                         </select>
                     </div>
                 </div>
@@ -1581,28 +1862,79 @@
             let classACount = DRIVERS_DATA.filter(d => d.cdl_type === 'Class A').length;
             let classBCount = DRIVERS_DATA.filter(d => d.cdl_type === 'Class B').length;
 
-            let pendingDrivers = DRIVERS_DATA.filter(d => d.commission_status === 'Pending');
-            let paidDrivers = DRIVERS_DATA.filter(d => d.commission_status === 'Paid');
+            let pendingDrivers = DRIVERS_DATA.filter(d => d.commission_status === 'Pending' || !d.commission_status);
+            let paidDrivers = DRIVERS_DATA.filter(d => d.commission_status === 'Paid' || d.commission_status === 'Replacement Fulfilled');
+            let replacementDueDrivers = DRIVERS_DATA.filter(d => d.commission_status === 'Replacement Due');
 
-            let pendingAmount = pendingDrivers.reduce((sum, d) => sum + (parseFloat(d.commission_amount) || 0), 0);
-            let paidAmount = paidDrivers.reduce((sum, d) => sum + (parseFloat(d.commission_amount) || 0), 0);
-            let grossAmount = pendingAmount + paidAmount;
+            let grossPendingAmount = pendingDrivers.reduce((sum, d) => sum + (parseFloat(d.commission_amount) || (d.cdl_type === 'Class A' ? 2000 : 1000)), 0);
+            let replacementCreditAmount = replacementDueDrivers.reduce((sum, d) => sum + (parseFloat(d.commission_amount) || (d.cdl_type === 'Class A' ? 2000 : 1000)), 0);
+            let netPendingAmount = grossPendingAmount - replacementCreditAmount;
+
+            let totalPaidCash = DRIVERS_DATA.filter(d => ['Paid', 'Replacement Due', 'Replacement Fulfilled'].includes(d.commission_status))
+                .reduce((sum, d) => sum + (parseFloat(d.commission_amount) || (d.cdl_type === 'Class A' ? 2000 : 1000)), 0);
+            let grossContractValue = DRIVERS_DATA.reduce((sum, d) => sum + (parseFloat(d.commission_amount) || (d.cdl_type === 'Class A' ? 2000 : 1000)), 0);
 
             document.getElementById('metric-total-count').textContent = totalCount;
             document.getElementById('metric-class-breakdown').textContent = `${classACount} Class A • ${classBCount} Class B`;
 
-            document.getElementById('metric-pending-amount').textContent = `$${pendingAmount.toLocaleString()}`;
-            document.getElementById('metric-pending-count').textContent = pendingDrivers.length;
+            const pendingEl = document.getElementById('metric-pending-amount');
+            const pendingSub = document.querySelector('#metric-pending-amount + .metric-sub');
 
-            document.getElementById('metric-paid-amount').textContent = `$${paidAmount.toLocaleString()}`;
-            document.getElementById('metric-paid-count').textContent = paidDrivers.length;
+            if (netPendingAmount < 0) {
+                pendingEl.textContent = `-$${Math.abs(netPendingAmount).toLocaleString()}`;
+                pendingEl.className = 'metric-value color-negative';
+                if (pendingSub) {
+                    pendingSub.innerHTML = `<span style="color:#f87171; font-weight:800;">⚠️ Credit owed to Joey (-$${Math.abs(netPendingAmount).toLocaleString()})</span>`;
+                }
+            } else {
+                pendingEl.textContent = `$${netPendingAmount.toLocaleString()}`;
+                pendingEl.className = 'metric-value color-pending';
+                if (pendingSub) {
+                    if (replacementCreditAmount > 0) {
+                        pendingSub.innerHTML = `Gross $${grossPendingAmount.toLocaleString()} − <span style="color:#f87171; font-weight:700;">$${replacementCreditAmount.toLocaleString()} credit</span>`;
+                    } else {
+                        pendingSub.innerHTML = `<span id="metric-pending-count">${pendingDrivers.length}</span> drivers awaiting payment`;
+                    }
+                }
+            }
 
-            document.getElementById('metric-gross-amount').textContent = `$${grossAmount.toLocaleString()}`;
+            document.getElementById('metric-paid-amount').textContent = `$${totalPaidCash.toLocaleString()}`;
+            const paidCountEl = document.getElementById('metric-paid-count');
+            if (paidCountEl) paidCountEl.textContent = paidDrivers.length + replacementDueDrivers.length;
+
+            document.getElementById('metric-gross-amount').textContent = `$${grossContractValue.toLocaleString()}`;
 
             // Subtab counts
             document.getElementById('badge-count-all').textContent = totalCount;
             document.getElementById('badge-count-pending').textContent = pendingDrivers.length;
-            document.getElementById('badge-count-paid').textContent = paidDrivers.length;
+            document.getElementById('badge-count-paid').textContent = DRIVERS_DATA.filter(d => d.commission_status === 'Paid').length;
+            const repBadge = document.getElementById('badge-count-replacement');
+            if (repBadge) repBadge.textContent = replacementDueDrivers.length;
+
+            // Render guarantee liability banner
+            const banner = document.getElementById('guarantee-liability-banner');
+            if (banner) {
+                if (replacementCreditAmount > 0) {
+                    banner.style.display = 'flex';
+                    banner.className = 'guarantee-liability-banner';
+                    banner.innerHTML = `
+                        <div class="liability-main">
+                            <div class="liability-title">
+                                <span>⚠️</span>
+                                <span>30-Day Guarantee Active: ${replacementDueDrivers.length} Replacement Candidate${replacementDueDrivers.length > 1 ? 's' : ''} Owed to Joey</span>
+                            </div>
+                            <div class="liability-desc">
+                                Joey paid for candidate(s) who did not last 30 days. This <b>-$${replacementCreditAmount.toLocaleString()} credit</b> is currently deducting from pending payouts and will automatically zero out as replacement drivers are placed.
+                            </div>
+                        </div>
+                        <div class="liability-badge">
+                            -$${replacementCreditAmount.toLocaleString()} Credit
+                        </div>
+                    `;
+                } else {
+                    banner.style.display = 'none';
+                }
+            }
         }
 
         function setPaymentFilter(status) {
@@ -1610,7 +1942,40 @@
             document.getElementById('tab-status-all').classList.toggle('active', status === 'all');
             document.getElementById('tab-status-pending').classList.toggle('active', status === 'Pending');
             document.getElementById('tab-status-paid').classList.toggle('active', status === 'Paid');
+            const tabRep = document.getElementById('tab-status-replacement');
+            if (tabRep) tabRep.classList.toggle('active', status === 'Replacement Due');
             renderDrivers();
+        }
+
+        function getGuaranteeStatus(driver) {
+            if (!driver.hired_date) {
+                return { daysSinceHire: 0, daysRemaining: 30, isWithin30Days: true, isPassed: false, percentElapsed: 0, hirePlus30Date: '' };
+            }
+            const parts = String(driver.hired_date).split('-');
+            if (parts.length !== 3) {
+                return { daysSinceHire: 0, daysRemaining: 30, isWithin30Days: true, isPassed: false, percentElapsed: 0, hirePlus30Date: '' };
+            }
+            const hireDate = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+            const endDate = new Date(hireDate.getTime() + 30 * 24 * 60 * 60 * 1000);
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+            const diffTime = today.getTime() - hireDate.getTime();
+            const daysSinceHire = Math.max(0, Math.floor(diffTime / (1000 * 60 * 60 * 24)));
+            const daysRemaining = Math.max(0, 30 - daysSinceHire);
+            const isWithin30Days = daysSinceHire <= 30;
+            const isPassed = daysSinceHire > 30;
+            const percentElapsed = Math.min(100, Math.round((daysSinceHire / 30) * 100));
+            const hirePlus30Date = `${endDate.getFullYear()}-${String(endDate.getMonth() + 1).padStart(2, '0')}-${String(endDate.getDate()).padStart(2, '0')}`;
+
+            return {
+                daysSinceHire,
+                daysRemaining,
+                isWithin30Days,
+                isPassed,
+                percentElapsed,
+                hirePlus30Date
+            };
         }
 
         function renderDrivers() {
@@ -1622,7 +1987,13 @@
 
             let filtered = DRIVERS_DATA.filter(d => {
                 // Payment status filter
-                if (currentPaymentFilter !== 'all' && d.commission_status !== currentPaymentFilter) return false;
+                if (currentPaymentFilter !== 'all') {
+                    if (currentPaymentFilter === 'Replacement Due') {
+                        if (d.commission_status !== 'Replacement Due') return false;
+                    } else {
+                        if (d.commission_status !== currentPaymentFilter) return false;
+                    }
+                }
                 // Company filter
                 if (companyFilter !== 'all' && d.company !== companyFilter) return false;
                 // Carrier filter
@@ -1655,8 +2026,13 @@
 
             container.innerHTML = filtered.map(d => {
                 const isPaid = d.commission_status === 'Paid';
+                const isReplacementDue = d.commission_status === 'Replacement Due';
+                const isReplacementFulfilled = d.commission_status === 'Replacement Fulfilled';
+                const isPending = d.commission_status === 'Pending' || !d.commission_status;
+
                 const isClassA = d.cdl_type === 'Class A';
-                const feeFormatted = `$${(parseFloat(d.commission_amount) || (isClassA ? 2000 : 1000)).toLocaleString()}`;
+                const feeAmount = (parseFloat(d.commission_amount) || (isClassA ? 2000 : 1000));
+                const feeFormatted = `$${feeAmount.toLocaleString()}`;
 
                 const cdlBadgeClass = isClassA ? 'badge-cdl-a' : 'badge-cdl-b';
                 const cdlLabel = isClassA ? '🚛 Class A CDL' : '🚚 Class B CDL';
@@ -1664,18 +2040,127 @@
                 const companyBadgeClass = d.company === 'Famous Transports' ? 'badge-famous' : 'badge-oakland';
                 const carrierBadgeClass = d.carrier === 'Panther' ? 'badge-panther' : 'badge-forward';
 
-                const statusBadge = isPaid
-                    ? `<div class="badge badge-status-paid">💰 PAID TO MILAD</div>`
-                    : `<div class="badge badge-status-pending">⏳ PENDING PAYOUT</div>`;
+                let statusBadge = '';
+                let cardBorderClass = 'is-pending';
+                let feeDisplayColor = '#f59e0b';
+                let feeDisplayContent = feeFormatted;
+
+                if (isPaid) {
+                    statusBadge = `<div class="badge badge-status-paid">💰 PAID TO MILAD</div>`;
+                    cardBorderClass = 'is-paid';
+                    feeDisplayColor = '#10b981';
+                } else if (isReplacementDue) {
+                    statusBadge = `<div class="badge badge-status-replacement">⚠️ REPLACEMENT DUE (&lt; 30 DAYS)</div>`;
+                    cardBorderClass = 'is-replacement-due';
+                    feeDisplayColor = '#f87171';
+                    feeDisplayContent = `-${feeFormatted} (Credit)`;
+                } else if (isReplacementFulfilled) {
+                    statusBadge = `<div class="badge badge-status-fulfilled">✅ REPLACEMENT FULFILLED</div>`;
+                    cardBorderClass = 'is-paid';
+                    feeDisplayColor = '#10b981';
+                } else {
+                    statusBadge = `<div class="badge badge-status-pending">⏳ PENDING PAYOUT</div>`;
+                    cardBorderClass = 'is-pending';
+                    feeDisplayColor = '#f59e0b';
+                }
 
                 const formattedHiredDate = formatDate(d.hired_date);
                 const formattedPaidDate = d.paid_date ? formatDate(d.paid_date) : null;
+                const guarantee = getGuaranteeStatus(d);
+
+                // Build 30-Day Guarantee Section
+                let guaranteeHTML = '';
+                if (isPaid) {
+                    if (guarantee.isWithin30Days) {
+                        guaranteeHTML = `
+                            <div class="guarantee-widget widget-active">
+                                <div class="guarantee-top">
+                                    <div class="guarantee-title">
+                                        <span>🛡️ 30-Day Guarantee Active</span>
+                                        <span class="guarantee-badge-day">Day ${guarantee.daysSinceHire} of 30 • ${guarantee.daysRemaining} days left</span>
+                                    </div>
+                                    <button class="btn-guarantee-fail" onclick="triggerGuaranteeClaim('${d.id}')" title="Click if candidate departs before 30 days">
+                                        <span>⚠️ Didn't Last 30 Days (Owe Replacement)</span>
+                                    </button>
+                                </div>
+                                <div class="guarantee-progress-track">
+                                    <div class="guarantee-progress-fill" style="width: ${guarantee.percentElapsed}%;"></div>
+                                </div>
+                                <div class="guarantee-caption">
+                                    Guarantee active through <b>${formatDate(guarantee.hirePlus30Date)}</b>. If driver departs within 30 days, Joey can claim a <b>-${feeFormatted}</b> replacement credit against pending payouts.
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        guaranteeHTML = `
+                            <div class="guarantee-widget widget-passed">
+                                <div class="guarantee-top">
+                                    <div class="guarantee-title" style="color: #6ee7b7;">
+                                        <span>🛡️ 30-Day Guarantee Completed</span>
+                                        <span class="guarantee-badge-day" style="background: rgba(16,185,129,0.15); color: #34d399; border-color: rgba(16,185,129,0.3);">30+ Days Completed</span>
+                                    </div>
+                                    <button class="btn-guarantee-fail-subtle" onclick="triggerGuaranteeClaim('${d.id}')" title="Report early departure if retroactive">
+                                        <span>⚠️ Didn't Last 30 Days</span>
+                                    </button>
+                                </div>
+                                <div class="guarantee-caption">
+                                    Driver successfully completed the 30-day guarantee period on <b>${formatDate(guarantee.hirePlus30Date)}</b>.
+                                </div>
+                            </div>
+                        `;
+                    }
+                } else if (isReplacementDue) {
+                    guaranteeHTML = `
+                        <div class="guarantee-widget widget-replacement-due">
+                            <div class="guarantee-due-header">
+                                <div class="due-icon">⚠️</div>
+                                <div>
+                                    <div class="due-title">Driver Did Not Last 30 Days — Replacement Candidate Owed</div>
+                                    <div class="due-desc">
+                                        Joey paid <b>${feeFormatted}</b> for ${escapeHtml(d.first_name)} ${escapeHtml(d.last_name)}. An active credit of <b>-${feeFormatted}</b> is currently offsetting pending amounts until Milad places a replacement driver.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="guarantee-due-actions">
+                                <button class="btn-guarantee-fulfill" onclick="fulfillGuaranteeReplacement('${d.id}')">
+                                    <span>✅ Mark Replacement Fulfilled</span>
+                                </button>
+                                <button class="btn-guarantee-revert" onclick="revertGuaranteeToPaid('${d.id}')">
+                                    <span>↩️ Revert to Paid (Driver Stayed)</span>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                } else if (isReplacementFulfilled) {
+                    guaranteeHTML = `
+                        <div class="guarantee-widget widget-fulfilled">
+                            <div class="guarantee-top">
+                                <div class="guarantee-title" style="color: #6ee7b7;">
+                                    <span>✅ 30-Day Replacement Fulfilled</span>
+                                </div>
+                                <button class="btn-guarantee-revert" onclick="revertGuaranteeToPaid('${d.id}')">
+                                    <span>↩️ Revert</span>
+                                </button>
+                            </div>
+                            <div class="guarantee-caption">
+                                A replacement driver was successfully placed or settled to satisfy the guarantee for ${escapeHtml(d.first_name)}.
+                            </div>
+                        </div>
+                    `;
+                }
 
                 // Action controls based on role
-                // Joey Haji can toggle payment status, but CANNOT delete or edit
-                const toggleBtn = isPaid
-                    ? `<button class="btn-toggle-pending" onclick="togglePaymentStatus('${d.id}')">↩️ Mark as Pending</button>`
-                    : `<button class="btn-toggle-paid" onclick="togglePaymentStatus('${d.id}')">💰 Mark as Paid</button>`;
+                // Both Joey and Milad can toggle payment and trigger guarantee
+                let toggleBtn = '';
+                if (isPaid) {
+                    toggleBtn = `<button class="btn-toggle-pending" onclick="togglePaymentStatus('${d.id}')">↩️ Mark as Pending</button>`;
+                } else if (isReplacementDue) {
+                    toggleBtn = `<button class="btn-toggle-pending" onclick="revertGuaranteeToPaid('${d.id}')">↩️ Revert to Paid</button>`;
+                } else if (isReplacementFulfilled) {
+                    toggleBtn = `<button class="btn-toggle-pending" onclick="revertGuaranteeToPaid('${d.id}')">↩️ Revert to Paid</button>`;
+                } else {
+                    toggleBtn = `<button class="btn-toggle-paid" onclick="togglePaymentStatus('${d.id}')">💰 Mark as Paid</button>`;
+                }
 
                 const adminButtons = currentUser?.role === 'admin' ? `
                     <div class="admin-action-group">
@@ -1685,7 +2170,7 @@
                 ` : '';
 
                 return `
-                    <div class="driver-card ${isPaid ? 'is-paid' : 'is-pending'}">
+                    <div class="driver-card ${cardBorderClass}">
                         <div class="driver-header">
                             <div class="driver-name-block">
                                 <div class="driver-name">
@@ -1719,11 +2204,13 @@
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Milad's Placement Fee</span>
-                                <span class="info-value" style="color: ${isPaid ? '#10b981' : '#f59e0b'}; font-weight:900; font-size:16px;">
-                                    ${feeFormatted}
+                                <span class="info-value" style="color: ${feeDisplayColor}; font-weight:900; font-size:16px;">
+                                    ${feeDisplayContent}
                                 </span>
                             </div>
                         </div>
+
+                        ${guaranteeHTML}
 
                         ${d.notes ? `
                             <div class="driver-notes">
@@ -1750,19 +2237,18 @@
             if (idx === -1) return;
 
             const driver = DRIVERS_DATA[idx];
-            const isCurrentlyPaid = driver.commission_status === 'Paid';
             const driverName = `${driver.first_name} ${driver.last_name}`;
             const fee = `$${(driver.commission_amount || (driver.cdl_type === 'Class A' ? 2000 : 1000)).toLocaleString()}`;
 
-            if (!isCurrentlyPaid) {
+            if (driver.commission_status === 'Pending' || !driver.commission_status) {
                 // Confirm marking as Paid
-                if (!confirm(`Mark ${driverName} as PAID?\n\nThis will record that Joey paid Milad ${fee} for this driver placement.`)) {
+                if (!confirm(`Mark ${driverName} as PAID?\n\nThis will record that Joey paid Milad ${fee} for this driver placement and activate the 30-day guarantee.`)) {
                     return;
                 }
                 driver.commission_status = 'Paid';
                 driver.paid_date = new Date().toISOString().split('T')[0];
                 showToast(`✅ ${driverName} marked as PAID (${fee})!`);
-            } else {
+            } else if (driver.commission_status === 'Paid') {
                 // Confirm reverting to Pending
                 if (!confirm(`Revert ${driverName} back to PENDING payout?\n\nThis will restore the ${fee} balance owed to Milad.`)) {
                     return;
@@ -1770,12 +2256,89 @@
                 driver.commission_status = 'Pending';
                 driver.paid_date = null;
                 showToast(`⏳ ${driverName} reverted to PENDING.`);
+            } else {
+                // Replacement Due or Fulfilled -> revert to Paid
+                if (!confirm(`Revert ${driverName} back to regular PAID status?`)) {
+                    return;
+                }
+                driver.commission_status = 'Paid';
+                driver.replacement_claimed_date = null;
+                driver.replacement_fulfilled_date = null;
+                showToast(`↩️ ${driverName} restored to PAID.`);
             }
 
             driver.updated_at = new Date().toISOString();
             await syncDriverToCloud(driver);
             renderDashboardMetrics();
             renderDrivers();
+        }
+
+        /* ==========================================================================
+           30-Day Guarantee Actions (Allowed for both Joey and Milad)
+           ========================================================================== */
+        async function triggerGuaranteeClaim(id) {
+            const idx = DRIVERS_DATA.findIndex(d => String(d.id) === String(id));
+            if (idx === -1) return;
+
+            const driver = DRIVERS_DATA[idx];
+            const driverName = `${driver.first_name} ${driver.last_name}`;
+            const feeFormatted = `$${(parseFloat(driver.commission_amount) || (driver.cdl_type === 'Class A' ? 2000 : 1000)).toLocaleString()}`;
+
+            if (!confirm(`⚠️ 30-DAY GUARANTEE CLAIM\n\nDid ${driverName} leave within 30 days of hire?\n\nIf confirmed:\n• Status will change to "Replacement Due"\n• Joey will receive a -${feeFormatted} credit against pending payouts\n• The credit will automatically offset and zero out when Milad places another candidate.`)) {
+                return;
+            }
+
+            driver.commission_status = 'Replacement Due';
+            driver.replacement_claimed_date = new Date().toISOString().split('T')[0];
+            driver.updated_at = new Date().toISOString();
+
+            await syncDriverToCloud(driver);
+            renderDashboardMetrics();
+            renderDrivers();
+            showToast(`⚠️ Replacement credit of ${feeFormatted} applied for Joey!`);
+        }
+
+        async function fulfillGuaranteeReplacement(id) {
+            const idx = DRIVERS_DATA.findIndex(d => String(d.id) === String(id));
+            if (idx === -1) return;
+
+            const driver = DRIVERS_DATA[idx];
+            const driverName = `${driver.first_name} ${driver.last_name}`;
+
+            if (!confirm(`✅ FULFILL 30-DAY GUARANTEE\n\nMark replacement for ${driverName} as FULFILLED?\n\nThis confirms that a replacement driver has been recruited and placed, resolving this guarantee credit.`)) {
+                return;
+            }
+
+            driver.commission_status = 'Replacement Fulfilled';
+            driver.replacement_fulfilled_date = new Date().toISOString().split('T')[0];
+            driver.updated_at = new Date().toISOString();
+
+            await syncDriverToCloud(driver);
+            renderDashboardMetrics();
+            renderDrivers();
+            showToast(`✅ Replacement satisfied for ${driverName}!`);
+        }
+
+        async function revertGuaranteeToPaid(id) {
+            const idx = DRIVERS_DATA.findIndex(d => String(d.id) === String(id));
+            if (idx === -1) return;
+
+            const driver = DRIVERS_DATA[idx];
+            const driverName = `${driver.first_name} ${driver.last_name}`;
+
+            if (!confirm(`Revert ${driverName} back to regular PAID status?\n\nThis will remove the replacement credit and restore normal payout totals.`)) {
+                return;
+            }
+
+            driver.commission_status = 'Paid';
+            driver.replacement_claimed_date = null;
+            driver.replacement_fulfilled_date = null;
+            driver.updated_at = new Date().toISOString();
+
+            await syncDriverToCloud(driver);
+            renderDashboardMetrics();
+            renderDrivers();
+            showToast(`↩️ Restored ${driverName} to Paid.`);
         }
 
         /* ==========================================================================
@@ -1873,7 +2436,9 @@
                         hired_date: hiredDate,
                         commission_amount: commissionAmount,
                         commission_status: paymentStatus,
-                        paid_date: paymentStatus === 'Paid' ? (prev.paid_date || new Date().toISOString().split('T')[0]) : null,
+                        paid_date: (paymentStatus === 'Paid' || paymentStatus === 'Replacement Due' || paymentStatus === 'Replacement Fulfilled')
+                            ? (prev.paid_date || new Date().toISOString().split('T')[0])
+                            : null,
                         notes: notes,
                         updated_at: new Date().toISOString()
                     };
@@ -1894,7 +2459,9 @@
                     hired_date: hiredDate,
                     commission_amount: commissionAmount,
                     commission_status: paymentStatus,
-                    paid_date: paymentStatus === 'Paid' ? new Date().toISOString().split('T')[0] : null,
+                    paid_date: (paymentStatus === 'Paid' || paymentStatus === 'Replacement Due' || paymentStatus === 'Replacement Fulfilled')
+                        ? new Date().toISOString().split('T')[0]
+                        : null,
                     notes: notes,
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString(),

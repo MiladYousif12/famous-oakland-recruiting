@@ -2,7 +2,10 @@
 
 Driver recruiting and commission tracking platform customized for **Famous Transports** and **Oakland Freight** (Fleet Owner: **Joey Haji**), engineered and operated by **Milad Yousif**.
 
-🔗 **Live Web App**: [https://miladyousif12.github.io/famous-oakland-recruiting/](https://miladyousif12.github.io/famous-oakland-recruiting/)
+🔗 **Live Vercel Production**: [https://famous-oakland-recruiting.vercel.app](https://famous-oakland-recruiting.vercel.app)  
+🌐 **Custom Domain (Vercel)**: `https://famous.miladyousif.com` (also `famousoakland.miladyousif.com` / `oakland.miladyousif.com`)  
+📦 **GitHub Pages Backup**: [https://miladyousif12.github.io/famous-oakland-recruiting/](https://miladyousif12.github.io/famous-oakland-recruiting/)  
+💻 **GitHub Repository**: [https://github.com/MiladYousif12/famous-oakland-recruiting](https://github.com/MiladYousif12/famous-oakland-recruiting)
 
 ---
 

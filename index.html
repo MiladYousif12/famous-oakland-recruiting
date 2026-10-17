@@ -196,14 +196,24 @@
             gap: 14px;
         }
 
-        .company-logo {
-            width: 56px;
-            height: 56px;
+        .company-logo-badge {
+            background: #ffffff;
             border-radius: 14px;
-            object-fit: cover;
-            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            padding: 8px 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            flex-shrink: 0;
+        }
+
+        .company-logo {
+            height: 38px;
+            width: auto;
+            max-width: 170px;
+            object-fit: contain;
+            display: block;
         }
 
         .company-titles h1 {
@@ -1204,77 +1214,64 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at top center, #1e293b 0%, #0a0f1d 75%);
+            background: radial-gradient(circle at top center, #1e293b 0%, #0a0f1d 85%);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            padding: 20px;
+            padding: max(24px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .auth-card {
-            background: rgba(17, 24, 39, 0.85);
+            background: rgba(17, 24, 39, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 28px;
-            padding: 36px 30px;
+            border-radius: 24px;
+            padding: 32px 26px;
             width: 100%;
-            max-width: 420px;
+            max-width: 380px;
             backdrop-filter: blur(20px);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
             text-align: center;
+            margin: auto 0;
         }
 
-        .auth-card img {
-            width: 72px;
-            height: 72px;
-            border-radius: 18px;
+        .auth-logo-badge {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 10px 18px;
             margin: 0 auto;
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            background: #0f172a;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .auth-logo-img {
+            height: 42px;
+            width: auto;
+            max-width: 210px;
+            object-fit: contain;
+            display: block;
         }
 
         .auth-title {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 900;
             color: white;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.4px;
+            line-height: 1.25;
         }
 
         .auth-sub {
             font-size: 13px;
             color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        .auth-presets {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 4px;
-        }
-
-        .btn-preset {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-color);
-            color: white;
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.2s;
-        }
-
-        .btn-preset:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-1px);
+            margin-top: 3px;
         }
 
         /* Footer */
@@ -1299,49 +1296,28 @@
     <!-- AUTH OVERLAY -->
     <div id="auth-overlay" class="auth-overlay">
         <div class="auth-card">
-            <img src="logo.png" alt="Company Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'64\' height=\'64\' viewBox=\'0 0 24 24\' fill=\'%2338bdf8\'><path d=\'M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z\'/></svg>'">
+            <div class="auth-logo-badge">
+                <img src="logo.png" alt="Oakland Freight" class="auth-logo-img">
+            </div>
             <div>
                 <div class="auth-title">Famous Transports & Oakland Freight</div>
                 <div class="auth-sub">Driver Recruiting & Payout System</div>
                 <div style="font-size: 11px; color: #fbbf24; font-weight: 800; margin-top: 4px;">Owner: Joey Haji</div>
             </div>
 
-            <form id="auth-form" onsubmit="handleLoginSubmit(event)" style="display: flex; flex-direction: column; gap: 12px; margin-top: 8px;">
+            <form id="auth-form" onsubmit="handleLoginSubmit(event)" style="display: flex; flex-direction: column; gap: 14px; margin-top: 6px;">
                 <div style="text-align: left;">
                     <label class="form-label">Username</label>
-                    <input type="text" id="login-username" class="form-input" placeholder="e.g. milad or joey" required autocomplete="username">
+                    <input type="text" id="login-username" class="form-input" placeholder="Enter username" required autocomplete="username">
                 </div>
                 <div style="text-align: left;">
                     <label class="form-label">Password</label>
                     <input type="password" id="login-password" class="form-input" placeholder="Enter password" required autocomplete="current-password">
                 </div>
-                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 12px; margin-top: 4px;">
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 13px; margin-top: 4px; font-size: 14px;">
                     Sign In
                 </button>
             </form>
-
-            <div style="display: flex; align-items: center; gap: 8px; margin: 4px 0;">
-                <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.08);"></div>
-                <span style="font-size: 10px; font-weight: 800; color: var(--text-dim); text-transform: uppercase;">Quick Logins</span>
-                <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.08);"></div>
-            </div>
-
-            <div class="auth-presets">
-                <button type="button" class="btn-preset" onclick="fillQuickLogin('milad', '2113')">
-                    <span style="display: flex; align-items: center; gap: 8px;">
-                        <span>👑</span>
-                        <span><b>Milad</b> (Recruiter Admin)</span>
-                    </span>
-                    <span style="font-size: 11px; color: #38bdf8; font-weight: 800;">Log In &rarr;</span>
-                </button>
-                <button type="button" class="btn-preset" onclick="fillQuickLogin('joey', 'joey')">
-                    <span style="display: flex; align-items: center; gap: 8px;">
-                        <span>🏢</span>
-                        <span><b>Joey</b> (Company Owner)</span>
-                    </span>
-                    <span style="font-size: 11px; color: #fbbf24; font-weight: 800;">Log In &rarr;</span>
-                </button>
-            </div>
         </div>
     </div>
 
@@ -1369,7 +1345,9 @@
         <div class="hero-banner">
             <div class="hero-header-content">
                 <div class="brand-block">
-                    <img src="logo.png" alt="Company Logo" class="company-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'64\' height=\'64\' viewBox=\'0 0 24 24\' fill=\'%2338bdf8\'><path d=\'M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z\'/></svg>'">
+                    <div class="company-logo-badge">
+                        <img src="logo.png" alt="Oakland Freight" class="company-logo">
+                    </div>
                     <div class="company-titles">
                         <h1>Famous Transports & Oakland Freight</h1>
                         <div class="subtitle">Driver Recruiting & Payout System • Powered by Milad Yousif</div>

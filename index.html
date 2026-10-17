@@ -1387,10 +1387,28 @@
             line-height: 1.25;
         }
 
-        .auth-sub {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 3px;
+        .auth-card-footer {
+            margin-top: 10px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 11px;
+            color: var(--text-dim);
+            line-height: 1.5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .auth-card-footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .auth-card-footer a:hover {
+            text-decoration: underline;
         }
 
         /* Footer */
@@ -1432,6 +1450,12 @@
                     Sign In
                 </button>
             </form>
+
+            <div class="auth-card-footer">
+                <span>© 2026 Famous Transports & Oakland Freight</span>
+                <span style="opacity: 0.5;">•</span>
+                <span>Powered by <a href="https://miladyousif.com" target="_blank">Milad Yousif</a></span>
+            </div>
         </div>
     </div>
 
